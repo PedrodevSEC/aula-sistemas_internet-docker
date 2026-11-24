@@ -6,14 +6,17 @@ from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 def get_db_connection():
-    connection = psycopg2.connect(
+    database_url = os.getenv("DATABASE_URL")
+
+    if database_url:
+        return psycopg2.connect(database_url)
+
+    return psycopg2.connect(
         host="postgres",
         database="escola",
         user="admin",
-        password="123456"
+        password="123456",
     )
-
-    return connection
 
 
 
